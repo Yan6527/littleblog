@@ -1,0 +1,8 @@
+/sys-admin/target/classes/application-dev.yml
+/sys-admin/target/classes/application.yml
+/sys-blog/target/classes/application-dev.yml
+/sys-blog/target/classes/application.yml
+/sys-blog/src/main/resources/application.yml
+/sys-blog/src/main/resources/application-dev.yml
+/sys-admin/src/main/resources/application.yml
+/sys-admin/src/main/resources/application-dev.yml
