@@ -22,7 +22,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/content/category")
 public class CategoryController {
-
     //---------------------------写博文-查询文章分类的接口--------------------------------
     @Autowired
     private CategoryService categoryService;

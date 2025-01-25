@@ -16,5 +16,4 @@ public interface RoleService extends IService<Role> {
     void insertRole(Role role);
     //修改角色-保存修改好的角色信息
     void updateRole(Role role);
-
 }

@@ -21,7 +21,6 @@ import java.util.List;
 @Service
 public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link>
     implements LinkService{
-
     @Override
     public ResponseResult getAllLink() {
         // 查询所有审核通过的

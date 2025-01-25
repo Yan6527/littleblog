@@ -15,4 +15,5 @@ public interface MenuService extends IService<Menu> {
     int count(Long menuId);
     //修改角色-根据角色id查询对应角色菜单列表树
     List<Long> selectMenuListByRoleId(Long roleId);
+
 }

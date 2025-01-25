@@ -19,7 +19,6 @@ import java.util.List;
 
 @Service
 public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagService {
-
     @Override
     public ResponseResult<PageVo> pageTagList(Integer pageNum, Integer pageSize, TagListDto tagListDto) {
         LambdaQueryWrapper<Tag> lambdaQueryWrapper = new LambdaQueryWrapper<>();

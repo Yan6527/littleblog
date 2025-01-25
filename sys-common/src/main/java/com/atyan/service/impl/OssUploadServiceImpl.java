@@ -16,7 +16,6 @@ import java.util.UUID;
 @Service
 @Slf4j
 public class OssUploadServiceImpl implements OssUploadService {
-
     @Autowired
     private AliOssUtil aliOssUtil;
     @Override

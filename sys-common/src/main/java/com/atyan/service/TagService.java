@@ -12,6 +12,7 @@ import java.util.List;
 
 public interface TagService extends IService<Tag> {
 
+
     //查询标签列表
     ResponseResult<PageVo> pageTagList(Integer pageNum, Integer pageSize, TagListDto tagListDto);
 

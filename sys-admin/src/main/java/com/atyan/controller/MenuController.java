@@ -74,7 +74,6 @@ public class MenuController {
         return ResponseResult.okResult(options);
     }
     //---------------------修改角色-根据角色id查询对应角色菜单列表树--------------------------
-
     @GetMapping(value = "/roleMenuTreeselect/{roleId}")
     public ResponseResult roleMenuTreeSelect(@PathVariable("roleId") Long roleId) {
         List<Menu> menus = menuService.selectMenuList(new Menu());

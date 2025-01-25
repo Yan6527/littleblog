@@ -6,5 +6,4 @@ import org.springframework.stereotype.Service;
 
 
 public interface ArticleVoService extends IService<ArticleVo> {
-
 }

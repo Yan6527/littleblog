@@ -21,7 +21,6 @@ public interface ArticleService extends IService<Article> {
         ResponseResult addArticle(AddArticleDto articleDto);
         //管理端-分页查询博文
         PageVo selectArticlePage(Article article, Integer pageNum, Integer pageSize);
-
         //修改文章-①根据文章id查询对应的文章
         ArticleByIdVo getInfo(Long id);
 

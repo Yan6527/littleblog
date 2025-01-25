@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2025-01-18 19:38:03
 */
 public interface LinkService extends IService<Link> {
-
     // 友链列表查询
      ResponseResult getAllLink();
 }

@@ -25,7 +25,6 @@ import java.util.List;
 
 @RestController
 public class LoginController {
-
     @Autowired
     private SystemLoginService systemLoginService;
 

@@ -8,8 +8,6 @@ public interface BlogLoginService {
     //登录
     ResponseResult login(User user);
 
-
-
     //退出登录
     ResponseResult logout();
 }

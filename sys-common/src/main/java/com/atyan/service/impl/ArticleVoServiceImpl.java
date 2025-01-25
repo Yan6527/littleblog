@@ -8,5 +8,4 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ArticleVoServiceImpl extends ServiceImpl<ArticleVoMapper, ArticleVo> implements ArticleVoService {
-
 }

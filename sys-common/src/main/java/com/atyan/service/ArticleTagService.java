@@ -5,5 +5,4 @@ import com.atyan.domain.ArticleTag;
 
 
 public interface ArticleTagService extends IService<ArticleTag> {
-
 }

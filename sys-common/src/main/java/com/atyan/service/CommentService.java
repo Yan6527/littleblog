@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2025-01-19 14:26:26
 */
 public interface CommentService extends IService<Comment> {
-
     ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize);
     ResponseResult addComment(Comment comment);
 }

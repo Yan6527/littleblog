@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2025-01-19 14:30:50
 */
 public interface UserService extends IService<User> {
+
     //用户登录
     ResponseResult userInfo();
     //修改用户信息

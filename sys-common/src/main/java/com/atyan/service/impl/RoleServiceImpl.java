@@ -74,7 +74,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
                 .collect(Collectors.toList());
         roleMenuService.saveBatch(roleMenuList);
     }
-
     @Override
     public void updateRole(Role role) {
         updateById(role);

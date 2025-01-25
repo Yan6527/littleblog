@@ -20,7 +20,6 @@ public class TagController {
 
     @Autowired
     private TagService tagService;
-
     //查询标签列表
     @GetMapping("/list")
     public ResponseResult<PageVo> list(Integer pageNum, Integer pageSize, TagListDto tagListDto){

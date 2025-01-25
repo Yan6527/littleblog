@@ -34,7 +34,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
         return getBaseMapper().selectPermsByOtherUserId(id);
     }
-
     //----------------------------------查询用户的路由信息(权限菜单)-------------------------------------
 
     @Override

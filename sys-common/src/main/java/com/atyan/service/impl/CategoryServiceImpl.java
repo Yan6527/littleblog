@@ -30,7 +30,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
     implements CategoryService{
     @Autowired
     private ArticleService articleService;
-
     @Override
     public ResponseResult getCategoryList() {
 
