@@ -27,6 +27,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Autowired
     //根据userid查询用户信息，也就是查username
     private UserService userService;
+
     @Override
     public ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize) {
 

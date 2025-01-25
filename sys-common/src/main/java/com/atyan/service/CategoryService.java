@@ -14,6 +14,7 @@ import java.util.List;
 * @createDate 2025-01-17 14:54:15
 */
 public interface CategoryService extends IService<Category> {
+
     //查询文章分类的接口
     ResponseResult getCategoryList();
     //写博客-查询所有分类

@@ -8,6 +8,7 @@ import java.util.List;
 
 @Service("ps")
 public class PermissionService {
+
     /**
      * 判断当前用户是否具有permission
      * @param permission 要判断的权限

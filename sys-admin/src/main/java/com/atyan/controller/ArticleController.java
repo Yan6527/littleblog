@@ -54,5 +54,4 @@ public class ArticleController {
         ids.forEach(id -> articleService.removeById(id));
         return ResponseResult.okResult();
     }
-
 }

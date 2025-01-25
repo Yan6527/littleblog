@@ -24,6 +24,7 @@ import java.util.Objects;
 @Service
 //认证，判断用户登录是否成功
 public class BlogLoginServiceImpl implements BlogLoginService {
+
     /**
      * Spring Security 提供的认证管理器，用于处理用户认证
      */

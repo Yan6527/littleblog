@@ -30,6 +30,7 @@ public class RoleController {
         role.setStatus(roleStatusDto.getStatus());
         return ResponseResult.okResult(roleService.updateById(role));
     }
+
     //-----------------------------新增角色--------------------------------------
     @PostMapping
     public ResponseResult add( @RequestBody Role role) {
@@ -57,5 +58,13 @@ public class RoleController {
     public ResponseResult remove(@RequestBody List<Long> ids) {
         ids.forEach(id -> roleService.removeById(id));
         return ResponseResult.okResult();
+    }
+
+//    ---------------------------------查询角色列表---------------------------------------
+    @GetMapping("/listAllRole")
+    //①查询角色列表接口
+    public ResponseResult listAllRole(){
+        List<Role> roles = roleService.selectRoleAll();
+        return ResponseResult.okResult(roles);
     }
 }

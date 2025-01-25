@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @Slf4j
 public class UploadController {
+ 
     @Autowired
     private OssUploadService ossUploadService;
 

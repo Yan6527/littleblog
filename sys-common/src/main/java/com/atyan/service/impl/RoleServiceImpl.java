@@ -1,25 +1,31 @@
 package com.atyan.service.impl;
 
-import com.atyan.domain.ResponseResult;
-import com.atyan.domain.RoleMenu;
-import com.atyan.service.RoleMenuService;
-import com.atyan.vo.PageVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.atyan.constants.SystemConstants;
+import com.atyan.domain.ResponseResult;
 import com.atyan.domain.Role;
+import com.atyan.domain.RoleMenu;
 import com.atyan.mapper.RoleMapper;
+import com.atyan.service.RoleMenuService;
 import com.atyan.service.RoleService;
+import com.atyan.vo.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * @author 35238
+ * @date 2023/8/4 0004 13:33
+ */
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
     @Override
@@ -38,24 +44,34 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         return otherRole;
     }
 
+    //------------------------------查询角色列表---------------------------------------
+
     @Override
     public ResponseResult selectRolePage(Role role, Integer pageNum, Integer pageSize) {
-        //分页查询
-        //对角色名称进行模糊查询。要求能够针对状态进行查询。要求按照role_sort进行升序排列
-        LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(role.getRoleName()!=null,Role::getRoleName,role.getRoleName());
-        queryWrapper.eq(role.getStatus()!=null,Role::getStatus,role.getStatus());
-        queryWrapper.orderByAsc(Role::getRoleSort);
-        //查询
-        Page<Role> page = page(new Page<>(pageNum, pageSize), queryWrapper);
-        //封装数据
-        PageVo pageVo = new PageVo(page.getRecords(),page.getTotal());
+        LambdaQueryWrapper<Role> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.like(StringUtils.hasText(role.getRoleName()),Role::getRoleName,role.getRoleName());
+        lambdaQueryWrapper.eq(StringUtils.hasText(role.getStatus()),Role::getStatus,role.getStatus());
+        lambdaQueryWrapper.orderByAsc(Role::getRoleSort);
+
+        Page<Role> page = new Page<>();
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        page(page,lambdaQueryWrapper);
+
+        //转换成VO
+        List<Role> roles = page.getRecords();
+
+        PageVo pageVo = new PageVo();
+        pageVo.setTotal(page.getTotal());
+        pageVo.setRows(roles);
         return ResponseResult.okResult(pageVo);
     }
 
-    @Autowired
+    //-------------------------------新增角色----------------------------------------
 
+    @Autowired
     private RoleMenuService roleMenuService;
+
     @Override
     @Transactional
     public void insertRole(Role role) {
@@ -68,19 +84,30 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     private void insertRoleMenu(Role role) {
         List<RoleMenu> roleMenuList = Arrays.stream(role.getMenuIds())
-                .distinct() // 去重
-                .filter(Objects::nonNull) // 过滤空值
-                .map(menuId -> new RoleMenu(role.getId(), menuId))
+                .map(memuId -> new RoleMenu(role.getId(), memuId))
                 .collect(Collectors.toList());
         roleMenuService.saveBatch(roleMenuList);
     }
+
+    //-----------------------修改角色-保存修改好的角色信息----------------------------
+
     @Override
     public void updateRole(Role role) {
         updateById(role);
-        if(role.getMenuIds()!=null&&role.getMenuIds().length>0){
-            roleMenuService.deleteRoleMenuByRoleId(role.getId());
-            insertRoleMenu(role);
-        }
+        roleMenuService.deleteRoleMenuByRoleId(role.getId());
+        insertRoleMenu(role);
+    }
 
+    //-----------------------新增用户-①查询角色列表接口----------------------------
+
+    @Override
+    public List<Role> selectRoleAll() {
+        return list(Wrappers.<Role>lambdaQuery().eq(Role::getStatus, SystemConstants.NORMAL));
+    }
+
+    //-----------------------修改用户-①根据id查询用户信息----------------------------
+    @Override
+    public List<Long> selectRoleIdByUserId(Long userId) {
+        return getBaseMapper().selectRoleIdByUserId(userId);
     }
 }

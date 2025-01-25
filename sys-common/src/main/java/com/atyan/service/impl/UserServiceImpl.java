@@ -1,7 +1,9 @@
 package com.atyan.service.impl;
 
 import com.atyan.domain.ResponseResult;
+import com.atyan.domain.UserRole;
 import com.atyan.exception.SystemException;
+import com.atyan.service.UserRoleService;
 import com.atyan.utils.BeanCopyUtils;
 import com.atyan.utils.SecurityUtils;
 import com.atyan.enums.AppHttpCodeEnum;
@@ -16,9 +18,12 @@ import com.atyan.service.UserService;
 import com.atyan.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @author sunset
@@ -132,7 +137,63 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>implements Use
         List<User> userVoList = BeanCopyUtils.copyBeanList(records, User.class);
         PageVo pageVo = new PageVo(userVoList,page.getTotal());
         return ResponseResult.okResult(pageVo);
+
     }
+
+    @Override
+    public boolean checkUserNameUnique(String userName) {
+        // 查询用户名是否唯一
+        return count(new LambdaQueryWrapper<User>().eq(User::getUserName, userName)) == 0;
+    }
+
+    @Override
+    public boolean checkPhoneUnique(User user) {
+        // 查询手机号是否唯一
+        return count(new LambdaQueryWrapper<User>().eq(User::getPhonenumber, user.getPhonenumber())) == 0;
+    }
+
+    @Override
+    public boolean checkEmailUnique(User user) {
+        // 查询邮箱是否唯一
+        return count(new LambdaQueryWrapper<User>().eq(User::getEmail, user.getEmail())) == 0;
+    }
+
+    @Autowired
+    private UserRoleService userRoleService;
+    @Override
+    public ResponseResult addUser(User user) {
+        //密码加密
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        save(user);
+        if(user.getRoleIds()!=null&&user.getRoleIds().length>0){
+            insertUserRole(user);
+        }
+        return ResponseResult.okResult();
+    }
+
+    //插入用户角色关联表
+    private void insertUserRole(User user) {
+        List<UserRole> userRoleList = Arrays.stream(user.getRoleIds())
+                .map(roleId -> new UserRole(user.getId(), roleId))
+                .collect(Collectors.toList());
+        userRoleService.saveBatch(userRoleList);
+    }
+
+    //-----------------------------修改用户-②更新用户信息-------------------------------
+    @Override
+    @Transactional
+    public void updateUser(User user) {
+        // 删除用户与角色关联
+        LambdaQueryWrapper<UserRole> userRoleUpdateWrapper = new LambdaQueryWrapper<>();
+        userRoleUpdateWrapper.eq(UserRole::getUserId,user.getId());
+        userRoleService.remove(userRoleUpdateWrapper);
+
+        // 新增用户与角色管理
+        insertUserRole(user);
+        // 更新用户信息
+        updateById(user);
+    }
+
 }
 
 

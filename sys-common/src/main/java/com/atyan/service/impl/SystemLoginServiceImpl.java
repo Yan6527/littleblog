@@ -21,6 +21,7 @@ import java.util.Objects;
 @Service
 //认证，判断用户登录是否成功
 public class SystemLoginServiceImpl implements SystemLoginService {
+
     @Autowired
     //AuthenticationManager是security官方提供的接口
     private AuthenticationManager authenticationManager;

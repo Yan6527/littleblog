@@ -18,6 +18,7 @@ import java.util.Objects;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
     private UserMapper userMapper;
     @Autowired

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> implements RoleMenuService {
+
     @Override
     public void deleteRoleMenuByRoleId(Long id) {
         LambdaQueryWrapper<RoleMenu> queryWrapper = new LambdaQueryWrapper<>();
