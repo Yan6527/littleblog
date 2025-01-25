@@ -48,8 +48,15 @@ public class CategoryController {
     }
     //删除分类
     @DeleteMapping()
-    public ResponseResult deleteCategory(@RequestBody List<Long> ids){
-        ids.forEach(id -> categoryService.removeById(id));
+    public ResponseResult deleteCategory(@RequestParam(value = "ids")String ids){
+        if(!ids.contains(",")){
+            categoryService.removeById(ids);
+        }else{
+            String[] idArr = ids.split(",");
+            for (String id : idArr) {
+                categoryService.removeById(id);
+            }
+        }
         return ResponseResult.okResult();
     }
     //修改分类 1、根据id查询分类

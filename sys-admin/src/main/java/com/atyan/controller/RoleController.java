@@ -55,8 +55,15 @@ public class RoleController {
     //--------------------------------删除角色---------------------------------------
 
     @DeleteMapping()
-    public ResponseResult remove(@RequestBody List<Long> ids) {
-        ids.forEach(id -> roleService.removeById(id));
+    public ResponseResult remove(@RequestParam(value = "ids")String ids) {
+        if (!ids.contains(",")){
+            roleService.removeById(ids);
+        }else{
+            String[] idArr = ids.split(",");
+            for (String id : idArr) {
+                roleService.removeById(id);
+            }
+        }
         return ResponseResult.okResult();
     }
 

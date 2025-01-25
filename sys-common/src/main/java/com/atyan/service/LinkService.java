@@ -2,6 +2,7 @@ package com.atyan.service;
 
 import com.atyan.domain.Link;
 import com.atyan.domain.ResponseResult;
+import com.atyan.vo.PageVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -13,4 +14,6 @@ public interface LinkService extends IService<Link> {
 
     // 友链列表查询
      ResponseResult getAllLink();
+    //分页查询友链
+    PageVo selectLinkPage(Link link, Integer pageNum, Integer pageSize);
 }

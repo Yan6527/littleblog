@@ -35,8 +35,15 @@ public class TagController {
     }
     //-------------------------------删除标签------------------------------------
     @DeleteMapping
-    public ResponseResult deleteTags(@RequestBody List<Long> ids) {
-        ids.forEach(id -> tagService.deleteTag(id)); // 遍历逐个删除
+    public ResponseResult remove(@RequestParam(value = "ids")String ids) {
+        if (!ids.contains(",")) {
+            tagService.removeById(ids);
+        } else {
+            String[] idArr = ids.split(",");
+            for (String id : idArr) {
+                tagService.removeById(id);
+            }
+        }
         return ResponseResult.okResult();
     }
 

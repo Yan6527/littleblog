@@ -56,8 +56,15 @@ public class UserController {
     }
     //--------------------------------删除用户信息-------------------------------------
     @DeleteMapping()
-    public ResponseResult remove(@RequestBody List<Long> ids) {
-        userService.removeByIds(ids);
+    public ResponseResult remove(@RequestParam(value = "ids") String ids) {
+        if (!ids.contains(",")) {
+            userService.removeById(ids);
+        } else {
+            String[] idArr = ids.split(",");
+            for (String id : idArr) {
+                userService.removeById(id);
+            }
+        }
         return ResponseResult.okResult();
     }
 

@@ -49,9 +49,15 @@ public class ArticleController {
     //---------------------------根据文章id来删除文章-------------------------
 
     @DeleteMapping()
-    public ResponseResult delete(@RequestBody List<Long> ids){
-        //批量删除
-        ids.forEach(id -> articleService.removeById(id));
+    public ResponseResult delete(@RequestParam(value = "ids") String ids) {
+        if (!ids.contains(",")) {
+            articleService.removeById(ids);
+        } else {
+            String[] idArr = ids.split(",");
+            for (String id : idArr) {
+                articleService.removeById(id);
+            }
+        }
         return ResponseResult.okResult();
     }
 }
