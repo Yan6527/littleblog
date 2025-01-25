@@ -132,7 +132,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>implements Use
         List<User> userVoList = BeanCopyUtils.copyBeanList(records, User.class);
         PageVo pageVo = new PageVo(userVoList,page.getTotal());
         return ResponseResult.okResult(pageVo);
-
     }
 
 }
